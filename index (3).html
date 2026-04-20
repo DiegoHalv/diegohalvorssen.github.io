@@ -31,10 +31,10 @@
     .hero-name span { color: var(--accent); }
     .hero-bio { font-size: 1.15rem; line-height: 1.8; color: rgba(245,242,237,0.6); max-width: 380px; margin-bottom: 2.5rem; }
     .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn { display: inline-block; padding: 0.75rem 1.75rem; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; font-family: "DM Mono", monospace; transition: all 0.2s; cursor: pointer; }
+    .btn { display: inline-block; padding: 0.75rem 1.75rem; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; font-family: "DM Mono", monospace; transition: all 0.2s; cursor: pointer; border: none; }
     .btn-primary { background: var(--accent); color: var(--black); font-weight: 500; }
     .btn-primary:hover { background: #ff6d38; }
-    .btn-outline { border: 0.5px solid var(--border); color: var(--white); }
+    .btn-outline { background: transparent; border: 0.5px solid var(--border); color: var(--white); }
     .btn-outline:hover { border-color: var(--white); }
     .hero-right { display: flex; flex-direction: column; justify-content: flex-end; padding: 5rem 3rem; }
     .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 3rem; }
@@ -86,6 +86,20 @@
     .exp-bullets li { font-size: 0.95rem; color: rgba(245,242,237,0.6); line-height: 1.75; padding-left: 1rem; position: relative; margin-bottom: 0.4rem; }
     .exp-bullets li::before { content: "·"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; top: 0; }
     .contact-section { text-align: center; padding: 8rem 3rem; border-top: 0.5px solid var(--border); }
+    /* MODAL */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.85); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
+    .modal-overlay.open { display:flex; }
+    .modal { background:var(--black); border:0.5px solid var(--border); max-width:480px; width:90%; padding:3rem; position:relative; }
+    .modal-close { position:absolute; top:1.25rem; right:1.5rem; background:none; border:none; color:var(--gray-light); font-family:"DM Mono",monospace; font-size:0.75rem; letter-spacing:0.1em; cursor:pointer; text-transform:uppercase; transition:color 0.2s; }
+    .modal-close:hover { color:var(--accent); }
+    .modal-eyebrow { font-family:"DM Mono",monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
+    .modal-title { font-family:"Bebas Neue",sans-serif; font-size:2.5rem; letter-spacing:0.04em; margin-bottom:2rem; }
+    .modal-item { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; border-bottom:0.5px solid var(--border); padding-bottom:1.5rem; }
+    .modal-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+    .modal-item-label { font-family:"DM Mono",monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); min-width:70px; padding-top:0.15rem; }
+    .modal-item-value a { color:var(--white); text-decoration:none; font-size:1rem; font-weight:500; transition:color 0.2s; display:block; }
+    .modal-item-value a:hover { color:var(--accent); }
+    .modal-item-value span { color:var(--gray-light); font-size:0.8rem; display:block; margin-top:0.2rem; }
     .contact-section .section-title { font-size: clamp(3rem,6vw,6rem); margin-bottom: 1rem; }
     .contact-sub { font-size: 0.95rem; color: var(--gray-light); margin-bottom: 2.5rem; }
     .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -135,7 +149,8 @@
       </p>
       <div class="hero-cta fade-in delay-3">
         <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="mailto:DiegoHalvorssen@gmail.com" class="btn btn-outline">Get in Touch</a>
+        <button onclick="openContact()" class="btn btn-outline">Get in Touch</button>
+        <p style="font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.1em;color:rgba(245,242,237,0.55);margin-top:0.75rem;">(305) 898-4872</p>
       </div>
     </div>
     <div class="hero-right">
@@ -392,15 +407,66 @@
     <h2 class="section-title">Let's Work<br><span style="color:var(--accent);">Together</span></h2>
     <p class="contact-sub">Open to internship and co-op opportunities in aerospace &amp; product development · Bilingual EN/ES</p>
     <div class="contact-links">
-      <a href="mailto:DiegoHalvorssen@gmail.com" class="btn btn-primary">Email Me</a>
+      <button onclick="openContact()" class="btn btn-primary">Contact Me</button>
       <a href="https://linkedin.com/in/diegohalvorssen" target="_blank" class="btn btn-outline">LinkedIn</a>
     </div>
+    <p style="font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.1em;color:rgba(245,242,237,0.5);margin-top:2rem;">(305) 898-4872 · DiegoHalvorssen@gmail.com</p>
   </section>
 
   <footer>
     <p>Diego Halvorssen · Mechanical Engineering · FSU · (305) 898-4872</p>
-    <p>Aerospace &amp; Energy · 2026</p>
+    <p>Aerospace &amp; Product Development · 2026</p>
   </footer>
+
+  <!-- CONTACT MODAL -->
+  <div class="modal-overlay" id="contactModal" onclick="closeOnOverlay(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeContact()">✕ Close</button>
+      <p class="modal-eyebrow">Get in touch</p>
+      <h2 class="modal-title">Contact Diego</h2>
+
+      <div class="modal-item">
+        <div class="modal-item-label">Phone</div>
+        <div class="modal-item-value">
+          <a href="tel:+13058984872">(305) 898-4872</a>
+          <span>Call or text anytime</span>
+        </div>
+      </div>
+
+      <div class="modal-item">
+        <div class="modal-item-label">Email</div>
+        <div class="modal-item-value">
+          <a href="mailto:DiegoHalvorssen@gmail.com">DiegoHalvorssen@gmail.com</a>
+          <span>Best for formal inquiries</span>
+        </div>
+      </div>
+
+      <div class="modal-item">
+        <div class="modal-item-label">LinkedIn</div>
+        <div class="modal-item-value">
+          <a href="https://linkedin.com/in/diegohalvorssen" target="_blank">linkedin.com/in/diegohalvorssen</a>
+          <span>Connect professionally</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openContact() {
+      document.getElementById('contactModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeContact() {
+      document.getElementById('contactModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeOnOverlay(e) {
+      if (e.target === document.getElementById('contactModal')) closeContact();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeContact();
+    });
+  </script>
 
 </body>
 </html>
