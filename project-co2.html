@@ -49,7 +49,7 @@
     .project-nav .accent-link:hover { color:#ff6d38; }
     .photo-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:1rem; }
     .photo-grid img { width:100%; height:220px; object-fit:cover; display:block; }
-    .photo-single img { width:100%; height:260px; object-fit:cover; display:block; margin-top:1rem; }
+    .photo-single img { width:100%; height:auto; max-height:500px; object-fit:contain; display:block; margin-top:1rem; background:#e8e6e0; }
     @media (max-width:768px) {
       nav { padding:1rem 1.5rem; }
       .project-hero { grid-template-columns:1fr; gap:2.5rem; padding:8rem 1.5rem 3rem; }
@@ -76,7 +76,7 @@
         Project 001 · High-Pressure Systems · Undergraduate Research
         <span class="award-badge">🏆 1st Place — EUREKA 2026</span>
       </p>
-      <h1 class="project-title">Supercritical<br><span>CO₂</span> Pressure<br>Vessel</h1>
+      <h1 class="project-title">Supercritical<br><span>CO₂</span> Pressure Vessel</h1>
       <p class="project-summary">A research-grade high-pressure vessel engineered to exceed 90 ATM, featuring a unique square internal cavity and dual sapphire optical access windows — designed for supercritical CO₂ experimentation with full CO₂, vacuum, and sensor interface integration.</p>
     </div>
     <div class="project-meta">
